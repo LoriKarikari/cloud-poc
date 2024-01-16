@@ -29,6 +29,7 @@ dist-ssr
 *.dll
 *.so
 *.dylib
+bin
 
 # Test binary, built with `go test -c`
 *.test
@@ -41,3 +42,5 @@ dist-ssr
 
 # Go workspace file
 go.work
+
+.env
