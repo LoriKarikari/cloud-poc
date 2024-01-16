@@ -44,3 +44,5 @@ bin
 go.work
 
 .env
+
+pb_data
