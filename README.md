@@ -12,5 +12,5 @@ Run backend
 
 ```bash
 cd backend 
-go run main.go serve
+make dev
 ```

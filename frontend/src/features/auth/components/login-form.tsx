@@ -1,12 +1,11 @@
+import { useLogin } from '@auth/hooks/use-login'
 import { registerInputSchema } from '@auth/schemas'
 import { RegisterInput } from '@auth/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { pb } from '@lib/pocketbase'
 import { useForm } from 'react-hook-form'
-import { useLocation } from 'wouter'
 
-export function RegisterForm() {
-  const [location, navigate] = useLocation()
+export function LoginForm() {
+  const { mutate: login } = useLogin()
   const {
     register,
     handleSubmit,
@@ -15,23 +14,17 @@ export function RegisterForm() {
     resolver: zodResolver(registerInputSchema),
   })
 
-  async function handleRegister(data: RegisterInput) {
+  async function handleLogin(data: RegisterInput) {
     const { email, password } = data
     try {
-      await pb.collection('users').create({
-        email,
-        password,
-        passwordConfirm: password,
-      })
-      await pb.collection('users').authWithPassword(email, password)
-      navigate('/')
+      await login({ email, password })
     } catch (err) {
       console.log(err)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(handleRegister)}>
+    <form onSubmit={handleSubmit(handleLogin)}>
       <div>
         <label>Email address</label>
         <input type="email" {...register('email')} />
